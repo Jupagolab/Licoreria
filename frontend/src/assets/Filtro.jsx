@@ -76,12 +76,6 @@ const FiltersAccordion = () => {
               label="Tipo de Bebida"
             />
           </FormGroup>
-          <TextField
-            id="outlined-basic"
-            label="Filtrar por..."
-            variant="outlined"
-            className="filter-textfield"
-          />
           <Button type="submit" variant="contained" color="primary" className="filter-button">
             Aplicar Filtros
           </Button>
