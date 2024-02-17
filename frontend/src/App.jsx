@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Modal from './assets/modal';
 import Lista from './assets/Lista';
-import Login from './assets/ModalSesion';
 
 function App() {
   const API_INVENTARIO = 'http://localhost:4000/inventario/';
@@ -12,7 +11,7 @@ function App() {
   const addAlert = (message, type) => {
     const newAlert = { message, type };
     setAlerts([...alerts, newAlert]);
-    setTimeout(() => removeAlert(newAlert), 5000);
+    setTimeout(() => removeAlert(newAlert), 3000);
   };
 
   const removeAlert = (alertToRemove) => {
@@ -40,9 +39,6 @@ function App() {
         <Modal
           api={API_USUARIO}
           addAlert={addAlert}
-        />
-        <Login 
-          api={API_USUARIO}
         />
       </main>
       {/* Renderiza las alertas */}
