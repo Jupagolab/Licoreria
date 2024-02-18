@@ -1,40 +1,33 @@
-import { useState, useEffect } from 'react';
+import Cookie from 'js-cookie';
 
-function AuthChecker() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+async function AuthChecker() {
+  const API = 'http://localhost:4000/usuarios/login'
 
-  useEffect(() => {
-    // Verificar si hay una cookie de autenticación
-    const token = getCookie('token');
+  const token = Cookie.get("token");
 
-    // Si hay una cookie, el usuario está autenticado
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      // Si no hay una cookie, el usuario no está autenticado
-      setIsLoggedIn(false);
+  if (token) {
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      }
     }
-  }, []);
 
-  // Función para obtener el valor de una cookie por su nombre
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    await fetch(API, options)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.mensaje);
+        return { status: data.mensaje };
+      })
+      .catch(err => {
+        throw new Error(`Acceso no autorizado ${err}`)
+      })
+
+  } else {
+    return "Sesion no iniciada";
   }
-
-  return isLoggedIn ? (
-    <div>
-      <p>Sesión iniciada</p>
-      {/* Aquí puedes poner el contenido que deseas mostrar a los usuarios autenticados */}
-    </div>
-  ) : (
-    <div>
-      <p>No hay sesión iniciada</p>
-      {/* Aquí puedes poner el contenido que deseas mostrar a los usuarios no autenticados */}
-    </div>
-  );
 }
 
 export default AuthChecker;
-

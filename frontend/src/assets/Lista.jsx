@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import FiltersAccordion from './Filtro';
 
 const Lista = ({ api, addAlert }) => {
   const [inventario, setInventario] = useState([]);
@@ -23,7 +24,7 @@ const Lista = ({ api, addAlert }) => {
   return (
     <div className="grid grid-cols-1 items-center text-center gap-4">
       <div>
-        <button className="bg-verde-300 rounded-2xl px-6 p-1.5">FILTRO</button>
+        <FiltersAccordion/>
       </div>
       <div className="grid grid-cols-1 gap-4">
         {inventario.map((producto, index) => (

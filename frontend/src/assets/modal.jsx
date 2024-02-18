@@ -81,7 +81,7 @@ function Modal({ api, addAlert }) {
 
   return (
     <div>
-      <button onClick={() => setShowModal(true)}>Abrir Modal</button>
+      <button onClick={() => setShowModal(true)}>Registrarse</button>
       {showModal && (
         <div className="modal">
           <div className="modal-content" ref={modalRef}>

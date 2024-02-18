@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
-import Modal from './assets/modal';
 import Lista from './assets/Lista';
-import FiltersAccordion from './assets/Filtro';
+import AuthChecker from './assets/Verificacion';
+import MenuToggle from './assets/MenuToggle';
 
 function App() {
   const API_INVENTARIO = 'http://localhost:4000/inventario/';
   const API_USUARIO = 'http://localhost:4000/usuarios/';
   const [alerts, setAlerts] = useState([]);
+  const [estaLoggeado, setEstaLoggeado] = useState("");
 
   const addAlert = (message, type) => {
     const newAlert = { message, type };
@@ -19,29 +20,32 @@ function App() {
     setAlerts(alerts.filter(alert => alert !== alertToRemove));
   };
 
+  useEffect(() => {
+    const comprobarSesion = async () => {
+      const resultado = await AuthChecker();
+      console.log(resultado)
+      setEstaLoggeado(resultado);
+    }
+    comprobarSesion();
+  }, []);
+
   return (
     <>
-      <header className="flex flex-wrap p-4 sm:p-6 lg:p-10 xl:p-8  items-center justify-between bg-verde-700 w-full">
-        <h1>Licoreria 77SinCorriente</h1>
-        <nav>
-          <ul className='flex justify-between gap-12'>
-            <a href=""><li>Inicio</li></a>
-            <a href=""><li>Favoritos</li></a>
-            <a href=""><li>Perfil</li></a>            
-          </ul>
-        </nav>
-        <button className='bg-verde-300 text-verde-700 rounded-lg px-3 py-1 lg:px-6 lg:py-3 border border-solid'>Cerrar Sesión</button>
+      <header className="flex flex-wrap p-4 sm:p-6 lg:p-10 xl:p-8 items-center justify-center lg:justify-between bg-verde-700 w-full">
+        <div className="flex flex-row-reverse items-center gap-9 lg:flex-row">
+          <h1>Licoreria 775rriente</h1>
+          <MenuToggle
+            API_USUARIO={API_USUARIO}
+            estaLoggeado={estaLoggeado}
+            addAlert={addAlert}
+          />
+        </div>
       </header>
       <main className="flex flex-wrap text-center p-4 bg-verde-500 min-h-4/5">
         <h2>Bienvenidos</h2>
-        <Lista 
+        <Lista
           api={API_INVENTARIO}
         />
-        <Modal
-          api={API_USUARIO}
-          addAlert={addAlert}
-        />
-        <FiltersAccordion/>
       </main>
       {/* Renderiza las alertas */}
       <div className="alerts">
