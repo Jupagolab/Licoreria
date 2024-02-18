@@ -1,36 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography, FormGroup, FormControlLabel, Checkbox, TextField, Button } from '@material-ui/core';
+import React, { useState, useRef } from 'react';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, FormGroup, FormControl, InputLabel, MenuItem, Select, TextField, Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 
 const FiltersAccordion = () => {
   const [expanded, setExpanded] = useState(false);
-  const [filters, setFilters] = useState({
-    cantidad: false,
-    volumen: false,
-    nombre: false,
-    marca: false,
-    tipoBebida: false,
-  });
+  const [selectedFilter, setSelectedFilter] = useState('');
+  const [filterValue, setFilterValue] = useState('');
+  const [filters] = useState([
+    { name: 'cantidad', label: 'Cantidad' },
+    { name: 'volumen', label: 'Volumen' },
+    { name: 'nombre', label: 'Nombre' },
+    { name: 'marca', label: 'Marca' },
+    { name: 'tipoBebida', label: 'Tipo de Bebida' },
+  ]);
 
   const accordionRef = useRef(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (accordionRef.current && !accordionRef.current.contains(event.target)) {
-        setExpanded(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
-  const handleChange = (filter) => (event) => {
-    setFilters({ ...filters, [filter]: event.target.checked });
+  const handleFilterChange = (event) => {
+    setSelectedFilter(event.target.value);
+    setFilterValue('');
   };
 
   const handleExpand = () => {
@@ -40,7 +28,9 @@ const FiltersAccordion = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí puedes manejar la lógica para aplicar los filtros
-    console.log('Filtros aplicados:', filters);
+    console.log('Filtro seleccionado:', selectedFilter);
+    console.log('Valor del filtro:', filterValue);
+    setExpanded(false); // Cierra el filtro al aplicar los filtros
   };
 
   return (
@@ -50,32 +40,36 @@ const FiltersAccordion = () => {
         aria-controls="panel1bh-content"
         id="panel1bh-header"
       >
-        <Typography>Filtros de Búsqueda</Typography>
+        <Typography>Filtro</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <form onSubmit={handleSubmit} className="filters-form">
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox checked={filters.cantidad} onChange={handleChange('cantidad')} className="filter-checkbox" />}
-              label="Cantidad"
+          <FormControl variant="outlined" className="filter-select">
+            <InputLabel id="filter-label">Seleccionar filtro</InputLabel>
+            <Select
+              labelId="filter-label"
+              id="filter-select"
+              value={selectedFilter}
+              onChange={handleFilterChange}
+              label="Seleccionar filtro"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {filters.map((filter) => (
+                <MenuItem key={filter.name} value={filter.name}>{filter.label}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {selectedFilter && (
+            <TextField
+              label={`Escribir valor para ${selectedFilter}`}
+              variant="outlined"
+              value={filterValue}
+              onChange={(event) => setFilterValue(event.target.value)}
+              className="text-field"
             />
-            <FormControlLabel
-              control={<Checkbox checked={filters.volumen} onChange={handleChange('volumen')} className="filter-checkbox" />}
-              label="Volumen"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={filters.nombre} onChange={handleChange('nombre')} className="filter-checkbox" />}
-              label="Nombre"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={filters.marca} onChange={handleChange('marca')} className="filter-checkbox" />}
-              label="Marca"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={filters.tipoBebida} onChange={handleChange('tipoBebida')} className="filter-checkbox" />}
-              label="Tipo de Bebida"
-            />
-          </FormGroup>
+          )}
           <Button type="submit" variant="contained" color="primary" className="filter-button">
             Aplicar Filtros
           </Button>
@@ -86,4 +80,12 @@ const FiltersAccordion = () => {
 };
 
 export default FiltersAccordion;
+
+
+
+
+
+
+
+
 
