@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Modal from './assets/modal';
 import Lista from './assets/Lista';
+import FiltersAccordion from './assets/Filtro';
 
 function App() {
   const API_INVENTARIO = 'http://localhost:4000/inventario/';
@@ -40,6 +41,7 @@ function App() {
           api={API_USUARIO}
           addAlert={addAlert}
         />
+        <FiltersAccordion/>
       </main>
       {/* Renderiza las alertas */}
       <div className="alerts">
