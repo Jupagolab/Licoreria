@@ -70,7 +70,7 @@ const Lista = ({ api, addAlert }) => {
       </div>
       <Productos 
         abierto={modalAbierto}
-        cerrado={mostrarModal}
+        cerrar={mostrarModal}
         api={api}
         productoSeleccionado={productoSeleccionado}
         addAlert={addAlert}
