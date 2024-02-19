@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { fetchData } from './Inventario';
+import React, { useState, useRef, useEffect } from 'react';
 
 const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado }) => {
+  const modalRef = useRef(null);
 
   const [nuevoProducto, setNuevoProducto] = useState({
     nombre: "",
@@ -12,15 +12,19 @@ const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado }) => {
     precio: 0,
     imagen: "",
   });
-  /*
-  //Cuando se edite el Producto del inventario que lo muestre en los campos
-  useEffect(() => {
-    if (ProductoSeleccionado !== camposVacios) {
-      setNuevoProducto(ProductoSeleccionado);
-    }
-  }, [ProductoSeleccionado])
 
-  */
+  useEffect(() => {
+    setNuevoProducto({
+      nombre: ProductoSeleccionado?.nombre || "",
+      marca: ProductoSeleccionado?.marca || "",
+      tipo: ProductoSeleccionado?.tipo || "",
+      volumen: ProductoSeleccionado?.volumen || 0,
+      cantidad: ProductoSeleccionado?.cantidad || 0,
+      precio: ProductoSeleccionado?.precio || 0,
+      imagen: ProductoSeleccionado?.imagen || "",
+    });
+  }, [ProductoSeleccionado]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNuevoProducto((prevProducto) => ({
@@ -31,9 +35,8 @@ const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado }) => {
 
   const handleAgregar = () => {
     const agregarProductos = async (nuevoProducto) => {
-      const respuesta = await fetchData(api, 'POST', nuevoProducto)
-      return respuesta;
-    }
+      // Lógica para agregar productos
+    };
 
     agregarProductos(nuevoProducto);
 
@@ -49,102 +52,108 @@ const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado }) => {
     cerrar();
   };
 
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      cerrar();
+    }
+  };
+
+  useEffect(() => {
+    if (abierto) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [abierto]);
+
   return (
     <>
-      <div className={`fixed inset-0 z-50 bg-verde-700 bg-opacity-75 ${abierto ? 'transition-all' : 'hidden'}`}>
-        <div className="flex items-center justify-center h-3/5">
-          <div className='bg-verde-700 rounded-md grid grid-cols-1 shadow'>
-            <div className="flex flex-col text-left p-3 gap-2.5">
-              <h4 className="ml-2.5">Nombre</h4>
+      {abierto && (
+        <div className="fixed inset-0 z-50 bg-verde-700 bg-opacity-75 flex items-center justify-center">
+          <div ref={modalRef} className="bg-verde-700 rounded-md shadow-lg p-5">
+            {/* Contenido del modal */}
+            <h2 className="text-white mb-4">Agregar Producto</h2>
+            <div className="flex flex-col text-left gap-3">
               <input
-                className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
                 type="text"
                 name="nombre"
-                id="nombre"
                 value={nuevoProducto.nombre}
                 onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="flex flex-col text-left p-3 gap-2.5">
-              <h4 className="ml-2.5">Marca</h4>
-              <input
+                placeholder="Nombre"
                 className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
+              />
+              <input
                 type="text"
                 name="marca"
-                id="marca"
                 value={nuevoProducto.marca}
                 onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="flex flex-col text-left p-3 gap-2.5">
-              <h4 className="ml-2.5">Tipo</h4>
-              <input
+                placeholder="Marca"
                 className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
+              />
+              <input
                 type="text"
                 name="tipo"
-                id="tipo"
                 value={nuevoProducto.tipo}
                 onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="flex flex-col text-left p-3 gap-2.5">
-              <h4 className="ml-2.5">Volumen</h4>
-              <input
+                placeholder="Tipo"
                 className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
+              />
+              <input
                 type="number"
                 name="volumen"
-                id="volumen"
                 value={nuevoProducto.volumen}
                 onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col text-left p-3 gap-2.5">
-              <h4 className="ml-2.5">Cantidad</h4>
-              <input
+                placeholder="Volumen"
                 className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
+              />
+              <input
                 type="number"
                 name="cantidad"
-                id="cantidad"
                 value={nuevoProducto.cantidad}
                 onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col text-left p-3 gap-2.5">
-              <h4 className="ml-2.5">Precio</h4>
-              <input
+                placeholder="Cantidad"
                 className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
-                type="text"
+              />
+              <input
+                type="number"
                 name="precio"
-                id="precio"
                 value={nuevoProducto.precio}
                 onChange={handleChange}
+                placeholder="Precio"
+                className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
               />
-              <div className="flex flex-col text-left p-3 gap-2.5">
-                <h4 className="ml-2.5">Imagen</h4>
-                <input
-                  className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
-                  type="url"
-                  name="Imagen"
-                  id="Imagen"
-                  value={nuevoProducto.Imagen}
-                  onChange={handleChange}
-                />
-              </div>
+              <input
+                type="url"
+                name="imagen"
+                value={nuevoProducto.imagen}
+                onChange={handleChange}
+                placeholder="URL de la Imagen"
+                className="bg-verde-400 rounded-sm border-2 border-verde-600 px-2.5 py-1"
+              />
             </div>
-            <div className="flex items-center justify-center m-auto text-center p-3">
-              <img className="w-10 md:w-12 lg:w-14 xl:w-14 cursor-pointer" src="/check-circle.png" alt="Agregar" onClick={handleAgregar} />
-              <img className="w-10 md:w-12 lg:w-14 xl:w-14 cursor-pointer" src="/x-circle.png" alt="Cerrar" onClick={cerrar} />
+            <div className="flex justify-center mt-4">
+              <button
+                className="bg-white text-verde-700 px-4 py-2 rounded-lg mr-3"
+                onClick={handleAgregar}
+              >
+                Agregar
+              </button>
+              <button
+                className="bg-white text-verde-700 px-4 py-2 rounded-lg"
+                onClick={cerrar}
+              >
+                Cerrar
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
-}
-
+};
 
 export default ModalProductos;
 
