@@ -45,14 +45,14 @@ function Login({ api, setRol }) {
     <div>
       <button onClick={handleOpenModal}>Iniciar Sesión</button>
       {isOpen && (
-        <div className="modal" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal z-50" onClick={handleCloseModal}>
+          <div className="bg-verde-500 flex flex-col items-center justify-center p-12 text-white gap-6 rounded-md shadow-md w-3/4" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={handleCloseModal}>&times;</span>
             <h2>Iniciar Sesión</h2>
-            <form>
-              <input type="text" placeholder="Usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
-              <input type="clave" placeholder="Contraseña" value={clave} onChange={(e) => setClave(e.target.value)} />
-              <button type="button" onClick={handleLogin}>Iniciar Sesión</button>
+            <form className="text-verde-700 font-500 w-full flex flex-wrap gap-6 flex-col">
+              <input className="bg-verde-100 px-4 py-2 shadow-md rounded-2xl" type="text" placeholder="Usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+              <input className="bg-verde-100 px-4 py-2 shadow-md rounded-2xl" type="clave" placeholder="Contraseña" value={clave} onChange={(e) => setClave(e.target.value)} />
+              <button className="bg-verde-300 px-4 py-2 shadow-md rounded-2xl" type="button" onClick={handleLogin}>Iniciar Sesión</button>
             </form>
           </div>
         </div>

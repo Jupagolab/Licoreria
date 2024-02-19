@@ -63,13 +63,6 @@ button:focus-visible {
   align-items: center;
 }
 
-.modal-content {
-  background-color: rgb(255, 0, 0);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
 .modal-content h2 {
   margin-top: 0;
 }
