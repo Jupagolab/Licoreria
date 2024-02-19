@@ -37,7 +37,7 @@ const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado, addAlert }
   const handleAgregar = () => {
     const agregarProductos = async (nuevoProducto) => {
       const respuesta = await fetchData(api, 'POST', nuevoProducto);
-      addAlert(respuesta.mensaje);
+      addAlert(respuesta.mensaje, respuesta.tipo);
     };
 
     agregarProductos(nuevoProducto);

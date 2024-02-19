@@ -16,10 +16,10 @@ class InventarioController {
       const { nombre, marca, tipo, volumen, cantidad, precio, imagen } = req.body;
       const nuevoProducto = new producto({ nombre, marca, tipo, volumen, cantidad, precio, imagen });
       await nuevoProducto.save();
-      res.json({ mensaje: 'Producto guardado en el inventario con éxito' });
+      res.json({ mensaje: 'Producto guardado en el inventario con éxito', tipo:"success" });
     } catch (err) {
       console.log(err);
-      res.status(404).json({ mensaje: `Error: ${err} ` })
+      res.status(404).json({ mensaje: `Error: ${err} `, tipo: "error" })
     }
   };
 }
