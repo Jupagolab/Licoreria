@@ -74,19 +74,7 @@ button:focus-visible {
   margin-top: 0;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
-select,
-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
 
 button {
   background-color: #007bff;

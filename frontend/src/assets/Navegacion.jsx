@@ -6,8 +6,8 @@ const Navegacion = ({ API_USUARIO, estaLoggeado, addAlert }) => {
   return (
     <>
       <nav className='transition-all'>
-        <ul className='flex flex-col gap-9 text-verde-700'>
-        <h1 className='mb-4'>Licoreria 775rriente</h1>
+        <ul className='flex flex-col gap-9 lg:flex-row lg:gap-3 text-verde-700'>
+          <h1 className='mb-4 lg:mb-1 lg:hidden'>Licoreria 775rriente</h1>
           <a className='font-bold' href="#"><li>Inicio</li></a>
           {estaLoggeado == "Acceso autorizado" ? (
             <>

@@ -31,8 +31,8 @@ function App() {
 
   return (
     <>
-      <header className="flex flex-wrap p-4 sm:p-6 lg:p-10 xl:p-8 items-center justify-center lg:justify-between bg-verde-700 w-full">
-        <div className="flex flex-row-reverse items-center gap-9 lg:flex-row">
+      <header className="flex flex-wrap p-4 sm:p-6 lg:p-10 xl:p-8 items-center justify-center bg-verde-700 w-full lg:gap-3 lg:justify-between">
+        <div className="flex flex-row-reverse items-center gap-9 lg:flex-row lg:w-full">
           <h1>Licoreria 775rriente</h1>
           <MenuToggle
             API_USUARIO={API_USUARIO}
@@ -41,10 +41,11 @@ function App() {
           />
         </div>
       </header>
-      <main className="flex flex-wrap text-center p-4 bg-verde-500 min-h-4/5">
+      <main className="flex flex-wrap flex-col gap-2 text-center p-4 bg-verde-500 min-h-screen">
         <h2>Bienvenidos</h2>
         <Lista
           api={API_INVENTARIO}
+          addAlert={addAlert}
         />
       </main>
       {/* Renderiza las alertas */}
