@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { fetchData } from './Inventario';
 
-const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado }) => {
+const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado, addAlert }) => {
   const modalRef = useRef(null);
 
   const [nuevoProducto, setNuevoProducto] = useState({
@@ -35,7 +36,8 @@ const ModalProductos = ({ abierto, cerrar, api, ProductoSeleccionado }) => {
 
   const handleAgregar = () => {
     const agregarProductos = async (nuevoProducto) => {
-      // Lógica para agregar productos
+      const respuesta = await fetchData(api, 'POST', nuevoProducto);
+      addAlert(respuesta.mensaje);
     };
 
     agregarProductos(nuevoProducto);
