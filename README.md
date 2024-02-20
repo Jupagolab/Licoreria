@@ -4,7 +4,7 @@
 Esta aplicación se encarga de llevar el registro del inventario de una Licoreria, donde se puede modificar y eliminar productos si así se desea, de su base de Datos. Además de poder filtrar el registro del inventario.  
  
 ## Video Explicativo del codigo
-https://youtu.be/V5O71cnlpjQ
+https://www.youtube.com/watch?v=VxWbJAIUX30
 
 ## Figma
 https://www.figma.com/file/yoUfX00aTvVROXU3APfgDF/LICORERIA?type=design&mode=design&t=6Hjur9ZUy7KSHEcc-1
